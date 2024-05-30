@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Dropdown from './Dropdown';
-import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
-import './Dashboard.css'
-const Dashboard = ({ service }) => {
+import './Dashboard.css';
 
-    const [selectedProject, setSelectedProject] = useState(null);
+const Dashboard = ({ service }) => {
+    const [selectedProject, setSelectedProject] = React.useState(null);
 
     const handleProjectChange = selectedOption => {
         const filter = service.find(filt => filt.name === selectedOption.label);
@@ -26,7 +25,7 @@ const Dashboard = ({ service }) => {
             {selectedProject && (
                 <div>
                     <h3>{selectedProject.name} Usage Chart</h3>
-                    <LineChart usage={selectedProject.usage} />
+                    <LineChart usage={selectedProject.usage} type={selectedProject.type} />
                 </div>
             )}
             {!selectedProject && <div>Please select a project to see details.</div>}
@@ -34,37 +33,59 @@ const Dashboard = ({ service }) => {
     );
 };
 
-const LineChart = ({ usage }) => {
+const LineChart = ({ usage, type }) => {
     const labels = usage.map((_, index) => `Sample ${index + 1}`);
+    let datasets = [];
 
-    const isRequestsData = usage.length > 0 && 'requests' in usage[0];
+    if (type === "HOT") {
+        datasets = [
+            {
+                label: 'Objects',
+                data: usage.map(sample => sample.objects),
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            },
+            {
+                label: 'Size',
+                data: usage.map(sample => sample.size),
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            },
+            {
+                label: 'Hits',
+                data: usage.map(sample => sample.hits),
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            },
+        ];
+    } else {
+        const isRequestsData = usage.length > 0 && 'requests' in usage[0];
 
-    const cpuData = isRequestsData ? usage.map(sample => sample.requests) : usage.map(sample => sample.cpu);
-    const memoryData = isRequestsData ? usage.map(sample => sample.allowed * 100) : usage.map(sample => sample.memory);
-    const diskData = isRequestsData ? usage.map(sample => sample.blocked * 100) : usage.map(sample => sample.disk);
-
-    const data = {
-        labels: labels,
-        datasets: [
+        datasets = [
             {
                 label: isRequestsData ? 'Requests' : 'CPU Usage',
-                data: cpuData,
+                data: usage.map(sample => isRequestsData ? sample.requests : sample.cpu),
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
             },
             {
                 label: isRequestsData ? 'Allowed Percentage' : 'Memory Usage',
-                data: memoryData,
+                data: usage.map(sample => isRequestsData ? sample.allowed * 100 : sample.memory),
                 borderColor: 'rgba(54, 162, 235, 1)',
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
             },
             {
                 label: isRequestsData ? 'Blocked Percentage' : 'Disk Usage',
-                data: diskData,
+                data: usage.map(sample => isRequestsData ? sample.blocked * 100 : sample.disk),
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
             },
-        ],
+        ];
+    }
+
+    const data = {
+        labels: labels,
+        datasets: datasets,
     };
 
     const options = {
@@ -81,6 +102,5 @@ const LineChart = ({ usage }) => {
 
     return <Line data={data} options={options} />;
 };
-
 
 export default Dashboard;
