@@ -1,0 +1,30 @@
+.navbar {
+    background-color: rgb(220, 220, 220);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 60px;
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.react-select-container {
+    min-width: 200px;
+    max-width: 400px;
+    width: 100%;
+    align-self: flex-end;
+}
+
+.react-select__control {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-shadow: none;
+}
+
+.react-select__menu {
+    border-radius: 4px;
+}

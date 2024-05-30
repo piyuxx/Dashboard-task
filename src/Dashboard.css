@@ -1,0 +1,7 @@
+.dashboard-container {
+    display: flex;
+    margin-left: 220px;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 900px;
+}

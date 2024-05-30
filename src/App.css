@@ -1,0 +1,26 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.navbar {
+    flex: 0 1 auto;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    flex: 0 0 200px;
+    overflow-y: auto;
+}
+
+.dashboard {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
