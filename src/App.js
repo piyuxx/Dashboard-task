@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
-import ObjectStorage from './ObjectStorage';
 import Firewall from './firewall';
 import Dashboard from './Dashboard';
 import './App.css';
 import ReportCard from './ReportCard';
-import { useTheme, styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { Grid, Card, CardHeader, CardContent, Typography, Divider, LinearProgress } from '@mui/material';
 
 // assets
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-import MonetizationOnTwoTone from '@mui/icons-material/MonetizationOnTwoTone';
-import DescriptionTwoTone from '@mui/icons-material/DescriptionTwoTone';
-import ThumbUpAltTwoTone from '@mui/icons-material/ThumbUpAltTwoTone';
-import CalendarTodayTwoTone from '@mui/icons-material/CalendarTodayTwoTone';
+
 import { useMediaQuery } from '@material-ui/core';
 
 const App = () => {
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState(null);
-    const [selectedService, setSelectedService] = useState('services');
     const [dropdownValue, setDropdownValue] = useState(null);
     const theme = useTheme();
     const gridSpacing = 3;
@@ -96,166 +91,168 @@ const App = () => {
                 onProjectChanges={handleProjectChanges}
                 dropdownValue={dropdownValue}
             />
-            <Grid container spacing={gridSpacing} style={{ marginTop: "10px" }} >
-                <Grid item xs={12} style={isLargeScreen ? { marginLeft: "100px" } : { marginLeft: "50px" }}>
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item lg={3} sm={5} xs={10}  >
-                            <ReportCard
-                                primary={dropdownValue?.specs?.cpu || ""}
-                                secondary="CPU"
-                                color={theme.palette.warning.main}
-                                footerData="Performance OF CPU"
-                                iconFooter={TrendingUpIcon}
-                            />
-                        </Grid>
-                        <Grid item lg={2.5} sm={5} xs={10}>
-                            <ReportCard
-                                primary={dropdownValue?.specs?.disk || ""}
-                                secondary="Disk"
-                                color={theme.palette.error.main}
-                                footerData="Disk Performance"
-                                iconFooter={TrendingDownIcon}
-                            />
-                        </Grid>
-                        <Grid item lg={2.5} sm={5} xs={10}>
-                            <ReportCard
-                                primary={dropdownValue?.specs?.memory || ""}
-                                secondary="Memory"
-                                color={theme.palette.success.main}
-                                footerData="Memory Performance"
-                                iconFooter={TrendingUpIcon}
-                            />
-                        </Grid>
-                        <Grid item lg={3} sm={5} xs={10}>
-                            <ReportCard
-                                primary={dropdownValue?.type || ""}
-                                secondary="Type"
-                                color={theme.palette.primary.main}
-                                footerData="Type of the Project"
-                                iconFooter={TrendingUpIcon}
-                            />
+            {dropdownValue && <div>
+                <Grid container spacing={gridSpacing} style={{ marginTop: "10px" }} >
+                    <Grid item xs={12} style={isLargeScreen ? { marginLeft: "100px" } : { marginLeft: "50px" }}>
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item lg={3} sm={5} xs={10}  >
+                                <ReportCard
+                                    primary={dropdownValue?.specs?.cpu || 0}
+                                    secondary="CPU"
+                                    color={theme.palette.warning.main}
+                                    footerData="Performance OF CPU"
+                                    iconFooter={TrendingUpIcon}
+                                />
+                            </Grid>
+                            <Grid item lg={2.5} sm={5} xs={10}>
+                                <ReportCard
+                                    primary={dropdownValue?.specs?.disk || 0}
+                                    secondary="Disk"
+                                    color={theme.palette.error.main}
+                                    footerData="Disk Performance"
+                                    iconFooter={TrendingDownIcon}
+                                />
+                            </Grid>
+                            <Grid item lg={2.5} sm={5} xs={10}>
+                                <ReportCard
+                                    primary={dropdownValue?.specs?.memory || 0}
+                                    secondary="Memory"
+                                    color={theme.palette.success.main}
+                                    footerData="Memory Performance"
+                                    iconFooter={TrendingUpIcon}
+                                />
+                            </Grid>
+                            <Grid item lg={3} sm={5} xs={10}>
+                                <ReportCard
+                                    primary={dropdownValue?.type || "NONE"}
+                                    secondary="Type"
+                                    color={theme.palette.primary.main}
+                                    footerData="Type of the Project"
+                                    iconFooter={TrendingUpIcon}
+                                />
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid item xs={4} lg={5} sm={3} md={3} style={{ marginTop: "50px" }}>
+                <Grid item xs={4} lg={5} sm={3} md={3} style={{ marginTop: "50px", marginLeft: "0px" }}>
 
-                <Grid container spacing={4}>
-                    <Grid item lg={12} xs={14} sm={10} md={10}>
-                        <Grid container spacing={8} style={isLargeScreen ? { marginLeft: "40px" } : {}}>
+                    <Grid container spacing={4}>
+                        <Grid item lg={10} xs={14} sm={10} md={10}>
+                            <Grid container spacing={9} style={isLargeScreen ? { marginLeft: "20px" } : {}}>
 
-                            <Grid item xs={11} sm={8} lg={5} md={10} sx={!isSmallScreen ? { marginLeft: "60px" } : {}}>
-                                <Dashboard service={dropdownValue} />
-                            </Grid>
-                            <Grid item xs={11} sm={12} lg={5} sx={isSmallScreen ? { marginLeft: "20px" } : isMediumScreen ? { marginLeft: "20px" } : {}}>
-                                <Firewall service={dropdownValue} />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-
-
-
-                    <Grid item lg={10} xs={8} sm={10} style={isLargeScreen ? { marginLeft: "100px" } : { marginLeft: "20px" }}>
-
-                        <Card>
-                            <CardHeader
-                                title={
-                                    <Typography component="div" className="card-header">
-                                        Traffic Sources
-                                    </Typography>
-                                }
-                            />
-                            <Divider />
-                            <CardContent>
-                                <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                                    <Grid item xs={12}>
-                                        <Grid container alignItems="center" spacing={1}>
-                                            <Grid item sm zeroMinWidth>
-                                                <Typography variant="body2">Total Storage Used</Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography variant="body2" align="right">
-                                                    {storageUsage?.totalStorageUsed || " "} GB
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <LinearProgress variant="determinate" aria-label="direct" value={80} color="primary" />
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={12} >
-                                        <Grid container alignItems="center" >
-                                            <Grid item sm zeroMinWidth>
-                                                <Typography variant="body2">Total Storage Capacity</Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography variant="body2" align="right">
-                                                    {storageUsage?.totalStorageCapacity} GB
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <LinearProgress variant="determinate" aria-label="Social" value={20} color="secondary" />
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid container alignItems="center" spacing={1}>
-                                            <Grid item sm zeroMinWidth>
-                                                <Typography variant="body2">Free Storage Space</Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography variant="body2" align="right">
-                                                    {storageUsage?.freeStorageSpace} GB
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <LinearProgress variant="determinate" aria-label="Referral" value={20} color="primary" />
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid container alignItems="center" spacing={1}>
-                                            <Grid item sm zeroMinWidth>
-                                                <Typography variant="body2">Total No. of Hits</Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography variant="body2" align="right">
-                                                    {storageUsage?.numberOfHits || 0}
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <LinearProgress variant="determinate" aria-label="Bounce" value={60} color="secondary" />
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid container alignItems="center" spacing={1}>
-                                            <Grid item sm zeroMinWidth>
-                                                <Typography variant="body2"> Total Capacity of hits</Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography variant="body1" align="left">
-                                                    Infinity
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={14} md={14} sm={14}>
-                                                <LinearProgress variant="determinate" aria-label="Internet" value={40} color="primary" />
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
+                                <Grid item xs={11} sm={8} lg={6} md={9} sx={!isSmallScreen ? { marginLeft: "30px" } : {}}>
+                                    <Dashboard service={dropdownValue} />
                                 </Grid>
-                            </CardContent>
+                                <Grid item xs={11} sm={12} lg={5} sx={isSmallScreen ? { marginLeft: "20px" } : isMediumScreen ? { marginLeft: "20px" } : {}}>
+                                    <Firewall service={dropdownValue} />
+                                </Grid>
+                            </Grid>
+                        </Grid>
 
-                        </Card>
+
+
+                        <Grid item lg={10
+
+                        } xs={10} sm={10} style={isLargeScreen ? { marginLeft: "100px", marginRight: "0px" } : { marginLeft: "20px" }}>
+
+                            <Card>
+                                <CardHeader
+                                    title={
+                                        <Typography component="div" className="card-header">
+                                            Sources
+                                        </Typography>
+                                    }
+                                />
+                                <Divider />
+                                <CardContent>
+                                    <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                        <Grid item xs={12}>
+                                            <Grid container alignItems="center" spacing={1}>
+                                                <Grid item sm zeroMinWidth>
+                                                    <Typography variant="body2">Total Storage Used</Typography>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Typography variant="body2" align="right">
+                                                        {storageUsage?.totalStorageUsed || " "} GB
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <LinearProgress variant="determinate" aria-label="direct" value={80} color="primary" />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item xs={12} >
+                                            <Grid container alignItems="center" >
+                                                <Grid item sm zeroMinWidth>
+                                                    <Typography variant="body2">Total Storage Capacity</Typography>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Typography variant="body2" align="right">
+                                                        {storageUsage?.totalStorageCapacity} GB
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <LinearProgress variant="determinate" aria-label="Social" value={storageUsage?.totalStorageCapacity || 0} color="secondary" />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Grid container alignItems="center" spacing={1}>
+                                                <Grid item sm zeroMinWidth>
+                                                    <Typography variant="body2">Free Storage Space</Typography>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Typography variant="body2" align="right">
+                                                        {storageUsage?.freeStorageSpace} GB
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <LinearProgress variant="determinate" aria-label="Referral" value={storageUsage?.freeStorageSpace || 0} color="primary" />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Grid container alignItems="center" spacing={1}>
+                                                <Grid item sm zeroMinWidth>
+                                                    <Typography variant="body2">Total No. of Hits</Typography>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Typography variant="body2" align="right">
+                                                        {storageUsage?.numberOfHits || 0}
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <LinearProgress variant="determinate" aria-label="Bounce" value={storageUsage?.numberOfHits || 0} color="secondary" />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Grid container alignItems="center" spacing={1}>
+                                                <Grid item sm zeroMinWidth>
+                                                    <Typography variant="body2"> Total Capacity of hits</Typography>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Typography variant="body1" align="left">
+                                                        Infinity
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={14} md={14} sm={14}>
+                                                    <LinearProgress variant="determinate" aria-label="Internet" value={100} color="primary" />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </CardContent>
+
+                            </Card>
+
+                        </Grid>
 
                     </Grid>
 
                 </Grid>
-
-            </Grid>
-            <div className="main-content">
-
             </div>
+            }
         </div >
     );
 };

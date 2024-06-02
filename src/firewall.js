@@ -41,7 +41,7 @@ const Firewall = ({ service }) => {
                     <Box className="firewall-details">
                         <Typography variant="h5">{service.name}</Typography>
                         <Typography variant="body1">Number of Rules: {rules.length}</Typography>
-                        <Box className={rules.length > 4 ? "rule-list scrollable" : "rule-list"}>
+                        <Box className={rules.length > 3 ? "rule-list scrollable" : "rule-list"}>
                             {rules.map((rule, index) => (
                                 <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: '10px', border: '1px solid #ccc', borderRadius: '5px', padding: '5px' }} className="rule-item">
                                     <TextField
