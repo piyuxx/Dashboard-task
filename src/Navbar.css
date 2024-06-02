@@ -1,10 +1,20 @@
 .navbar {
-    background-color: rgb(220, 220, 220);
+    background-color: #3366FF;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    height: 60px;
+    justify-content: end;
+    flex-direction: row;
+    padding: 10px;
+    height: 100px;
+    margin: 0;
+    width: 100%;
+    color: white;
+    font-family: sans-serif;
+}
+
+.dropdown-container {
+    display: "flex";
+    flex-direction: row;
+    gap: '10px'
 }
 
 .navbar h1 {
@@ -12,12 +22,12 @@
     font-size: 24px;
 }
 
-.react-select-container {
-    min-width: 200px;
-    max-width: 400px;
+/* .react-select-container {
+    min-width: 130px;
+    max-width: 250px;
     width: 100%;
     align-self: flex-end;
-}
+} */
 
 .react-select__control {
     border-radius: 4px;
@@ -27,4 +37,33 @@
 
 .react-select__menu {
     border-radius: 4px;
+}
+
+/* Media query for mobile screens */
+@media only screen and (max-width: 600px) {
+
+    .dropdown-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Align items to the center of the column */
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+
+    }
+
+    .navbar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Align items to the center of the column */
+        align-items: center;
+        height: 100px;
+        background-color: #3366FF;
+        width: 100%;
+
+        /* Align items to the center of the column */
+
+    }
 }

@@ -1,7 +1,29 @@
 .dashboard-container {
-    display: flex;
-    margin-left: 220px;
-    flex-direction: column;
-    margin-top: 20px;
-    width: 900px;
+    padding: 20px;
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 90px;
+    margin: 0 auto;
+}
+
+.chart-container {
+    position: relative;
+
+    /* Set a fixed height for the chart */
+    width: 100%;
+    /* Ensure it takes the full width of the parent */
+}
+
+h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+    .dashboard-container {
+        padding: 5px;
+        margin-left: 20px;
+    }
+
 }

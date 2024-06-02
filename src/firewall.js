@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import Dropdown from './Dropdown';
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import { TextField, Button, Typography, Box, IconButton } from '@mui/material';
+import { Delete } from '@mui/icons-material';
 import './Firewall.css';
 
 const Firewall = ({ service }) => {
-    const [selectedProject, setSelectedProject] = useState(null);
-    const [rules, setRules] = useState([]);
-
-    const handleProjectChange = selectedOption => {
-        const filter = service.find(filt => filt.name === selectedOption.label);
-        setSelectedProject(filter);
-        setRules(filter?.rules || []);
-    };
+    const [rules, setRules] = useState(service?.rules || []);
 
     const handleAddRule = () => {
         const newRule = {
@@ -41,48 +35,36 @@ const Firewall = ({ service }) => {
     }
 
     return (
-        <div className='center'>
-            <div className="firewall-container">
-                <Dropdown
-                    projects={service}
-                    selectedProject={selectedProject}
-                    onProjectChange={handleProjectChange}
-                />
-
-                {selectedProject && (
-                    <div className="firewall-details">
-                        <h2>{selectedProject.name}</h2>
-                        <p>Number of Rules: {rules.length}</p>
-                        <div className="rule-list">
+        <Box >
+            <Box className="firewall-container">
+                {service && (
+                    <Box className="firewall-details">
+                        <Typography variant="h5">{service.name}</Typography>
+                        <Typography variant="body1">Number of Rules: {rules.length}</Typography>
+                        <Box className={rules.length > 4 ? "rule-list scrollable" : "rule-list"}>
                             {rules.map((rule, index) => (
-                                <div key={index} className="rule-item">
-                                    <input
-                                        type="text"
-                                        placeholder="IP"
+                                <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: '10px', border: '1px solid #ccc', borderRadius: '5px', padding: '5px' }} className="rule-item">
+                                    <TextField
+                                        variant="outlined"
+                                        label="IP"
                                         value={rule.ip}
                                         onChange={e => handleChangeRule(index, 'ip', e.target.value)}
                                     />
-                                    <input
-                                        type="text"
-                                        placeholder="Port"
+                                    <TextField
+                                        variant="outlined"
+                                        label="Port"
                                         value={rule.port}
                                         onChange={e => handleChangeRule(index, 'port', e.target.value)}
                                     />
-                                    <input
-                                        type="text"
-                                        placeholder="Description"
-                                        value={rule.description}
-                                        onChange={e => handleChangeRule(index, 'description', e.target.value)}
-                                    />
-                                    <button onClick={() => handleRemoveRule(index)}><FaMinus /></button>
-                                </div>
+                                    <IconButton onClick={() => handleRemoveRule(index)}><Delete /></IconButton>
+                                </Box>
                             ))}
-                        </div>
-                        <button onClick={handleAddRule}><FaPlus /> Add Rule</button>
-                    </div>
+                        </Box>
+                        <Button variant="contained" onClick={handleAddRule} startIcon={<FaPlus />}>Add Rule</Button>
+                    </Box>
                 )}
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 };
 

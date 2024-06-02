@@ -3,25 +3,21 @@ import Dropdown from './Dropdown';
 import './object.css'
 
 const ObjectStorage = ({ service }) => {
-    const [selectedProject, setSelectedProject] = useState(null);
 
-    const handleProjectChange = selectedOption => {
-        const filter = service.find(filt => filt.name === selectedOption.label);
-        setSelectedProject(filter);
-    };
 
+    console.log(service, "objectStorage")
     const calculateStorageUsage = () => {
-        if (!selectedProject || !selectedProject.usage) return null;
+        if (!service || !service.usage) return null;
 
         let totalStorageUsed = 0;
-        let totalStorageCapacity = selectedProject.specs.disk;
+        let totalStorageCapacity = service.specs.disk;
         let freeStorageSpace = 0;
         let numberOfHits = 0;
 
-        if (selectedProject.usage[0].hasOwnProperty('disk')) {
-            totalStorageUsed = selectedProject.usage.reduce((acc, curr) => acc + curr.disk, 0);
-        } else if (selectedProject.usage[0].hasOwnProperty('hits')) {
-            numberOfHits = selectedProject.usage.reduce((acc, curr) => acc + curr.hits, 0);
+        if (service.usage[0].hasOwnProperty('disk')) {
+            totalStorageUsed = service.usage.reduce((acc, curr) => acc + curr.disk, 0);
+        } else if (service.usage[0].hasOwnProperty('hits')) {
+            numberOfHits = service.usage.reduce((acc, curr) => acc + curr.hits, 0);
         }
 
         freeStorageSpace = totalStorageCapacity - totalStorageUsed;
@@ -42,15 +38,11 @@ const ObjectStorage = ({ service }) => {
 
     return (
         <div className="object-storage-container">
-            <Dropdown
-                projects={service}
-                selectedProject={selectedProject}
-                onProjectChange={handleProjectChange}
-            />
 
-            {selectedProject && (
+
+            {service && (
                 <div className="object-storage-details">
-                    <h2>{selectedProject.name}</h2>
+                    <h2>{service.name}</h2>
                     {storageUsage && (
                         <div>
                             <p>Total Storage Used: {storageUsage.totalStorageUsed} GB</p>

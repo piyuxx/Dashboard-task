@@ -1,26 +1,36 @@
 import React from 'react';
 import Select from 'react-select';
 import './Navbar.css';
-
-const Navbar = ({ projects, selectedProject, onProjectChange }) => {
-
+import Dropdown from './Dropdown';
+const Navbar = ({ projects, selectedProject, onProjectChange, onProjectChanges, drodownValue }) => {
+    console.log(projects, "projects")
     return (
-        <nav className="navbar" style={{ backgroundColor: 'rgb(220,220,220)' }}>
-            <h1>My Projects</h1>
-            <div className="dropdown-container">
-                <Select
-                    className="react-select-container"
-                    classNamePrefix="react-select"
-                    options={projects.map(project => ({
-                        value: project.id,
-                        label: project.name
-                    }))}
+        <nav className="navbar" >
 
-                    onChange={onProjectChange}
-                    placeholder="Select a project"
-                />
-            </div>
-        </nav>
+            <div className="dropdown-container" style={{}}>
+                <div>
+
+                    <Select
+                        className="react-select-container"
+                        classNamePrefix="react-select"
+                        options={projects.map(project => ({
+                            value: project.id,
+                            label: project.name
+                        }))}
+
+                        onChange={onProjectChange}
+                        placeholder="Select"
+                    />
+                </div>
+                <div>
+                    <Dropdown
+                        projects={selectedProject}
+                        onProjectChange={onProjectChanges}
+                        drodownValue={drodownValue}
+                    />
+                </div>
+            </div >
+        </nav >
     );
 };
 

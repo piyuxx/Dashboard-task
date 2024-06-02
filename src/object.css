@@ -2,14 +2,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 
-    margin-top: 30px;
-    margin-left: 400px;
+
 }
 
 .object-storage-details {
-    margin-top: 90px;
-    background-color: #f9f9f9;
+
+    background-color: #FE413B;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

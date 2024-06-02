@@ -1,26 +1,65 @@
 .app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-}
-
-.navbar {
-    flex: 0 1 auto;
+    align-items: center;
+    padding: 0;
+    margin: 0;
 }
 
 .main-content {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-}
-
-.sidebar {
-    flex: 0 0 200px;
-    overflow-y: auto;
-}
-
-.dashboard {
-    flex: 1;
+    width: 100%;
     padding: 20px;
-    overflow-y: auto;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.col {
+    flex: 1;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.col-full {
+    flex: 1;
+    width: 100%;
+}
+
+.navbar {
+    background-color: #3366FF;
+    padding: 10px;
+    height: 100px;
+    width: 100%;
+    margin: 0;
+    color: white;
+    font-family: sans-serif;
+}
+
+.dropdown-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-container>div {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.react-select-container {
+    width: 100%;
+    max-width: 300px;
+}
+
+.react-select__control {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-shadow: none;
+}
+
+.react-select__menu {
+    border-radius: 4px;
 }
