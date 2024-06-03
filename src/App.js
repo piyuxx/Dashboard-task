@@ -140,7 +140,7 @@ const App = () => {
                         <Grid item lg={10} xs={14} sm={10} md={10}>
                             <Grid container spacing={9} style={isLargeScreen ? { marginLeft: "20px" } : {}}>
 
-                                <Grid item xs={11} sm={8} lg={6} md={9} sx={!isSmallScreen ? { marginLeft: "30px" } : {}}>
+                                <Grid item xs={10.9} sm={8} lg={6} md={9} sx={!isSmallScreen ? { marginLeft: "30px" } : {}}>
                                     <Dashboard service={dropdownValue} />
                                 </Grid>
                                 <Grid item xs={11} sm={12} lg={5} sx={isSmallScreen ? { marginLeft: "20px" } : isMediumScreen ? { marginLeft: "20px" } : {}}>

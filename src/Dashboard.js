@@ -3,10 +3,13 @@ import Dropdown from './Dropdown';
 import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import './Dashboard.css'
+import { useMediaQuery } from '@material-ui/core';
+
 const Dashboard = ({ service }) => {
     console.log(service, "maps")
 
     const [selectedProject, setSelectedProject] = useState(null);
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const handleProjectChange = selectedOption => {
         const filter = service.find(filt => filt.name === selectedOption.label);
@@ -18,10 +21,16 @@ const Dashboard = ({ service }) => {
     }
 
     return (
-        <div className="dashboard-container">
+        <div className="dashboard-container" style={isSmallScreen ? {
+
+            maxWidth: '90vw',
+            overflowX: 'auto',
+            zIndex: '999',
+            position: 'relative'
+        } : {}}>
 
             {service && (
-                <div>
+                <div style={isSmallScreen ? { width: '500px', font: 'Montserrat' } : {}}>
                     <h3>{service.name} Usage Chart</h3>
                     <LineChart usage={service.usage || []} />
                 </div>
