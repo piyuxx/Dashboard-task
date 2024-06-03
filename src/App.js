@@ -12,7 +12,7 @@ import { Grid, Card, CardHeader, CardContent, Typography, Divider, LinearProgres
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 
-import { useMediaQuery } from '@material-ui/core';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const App = () => {
     const [projects, setProjects] = useState([]);

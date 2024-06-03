@@ -3,7 +3,7 @@ import Dropdown from './Dropdown';
 import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import './Dashboard.css'
-import { useMediaQuery } from '@material-ui/core';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Dashboard = ({ service }) => {
     console.log(service, "maps")
