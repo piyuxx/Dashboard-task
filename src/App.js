@@ -188,7 +188,7 @@ const App = () => {
                                                 </Grid>
                                                 <Grid item>
                                                     <Typography variant="body2" align="right">
-                                                        {storageUsage?.totalStorageCapacity} GB
+                                                        {storageUsage?.totalStorageCapacity || 0} GB
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12}>
@@ -203,7 +203,7 @@ const App = () => {
                                                 </Grid>
                                                 <Grid item>
                                                     <Typography variant="body2" align="right">
-                                                        {storageUsage?.freeStorageSpace} GB
+                                                        {storageUsage?.freeStorageSpace || 0} GB
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12}>
